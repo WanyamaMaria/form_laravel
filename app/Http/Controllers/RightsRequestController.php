@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\rightsrequestFormRequest;
 use App\Models\RightsRequest;
 use App\Models\User;
-use Illuminate\Container\Attributes\Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 /**
@@ -34,16 +34,20 @@ class RightsRequestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-   
-    public function store(rightsrequestFormRequest $request)
-    {
-        $data = $request->validate([]);
-        Auth::user()->rightsRequests()->create($data);
+ 
 
-        //RightsRequest::create($data);
+public function store(rightsrequestFormRequest $request)
+{
+    $data = $request->validated();
+    $data['initiate_payments'] = in_array('initiate', $request->rights ?? []) ? true : false;
+$data['review_payments'] = in_array('review', $request->rights ?? []) ? true : false;
+$data['approve_payments'] = in_array('approve', $request->rights ?? []) ? true : false;
+unset($data['rights']); // Use validated data from FormRequest
+    Auth::user()->rightsRequests()->create($data);
 
-        return redirect()->route('rights-requests.showAll')->with('success', 'Request added successfully.');
-    }
+    return redirect()->route('rights-requests.showAll')->with('success', 'Request added successfully.');
+}
+
 
 
 

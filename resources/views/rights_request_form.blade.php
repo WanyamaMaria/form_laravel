@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+
+<form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit" class="logout-btn2">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+</form>
+
 <div class="container">
     @if(session('success'))
         <div id= "success-message" class="success-message">
@@ -25,11 +33,19 @@
             @error('date') <div class="error">{{ $message }}</div> @enderror
 
             <label><i class="fas fa-user"></i> Staff Name:</label>
-            <input type="text" name="staff_name" value="{{ old('staff_name') }}">
+            <input type="text" name="staff_name" value="{{ Auth::user()->name }}" >
+
+            <!-- <input type="text" name="staff_name" value="{{ old('staff_name') }}"> -->
             @error('staff_name') <div class="error">{{ $message }}</div> @enderror
 
             <label><i class="fas fa-building"></i> Department:</label>
-            <input type="text" name="department" value="{{ old('department') }}">
+            <select name="department" required>
+                <option value="">-- Select Department --</option>
+                <option value="Finance" {{ old('department') == 'Finance' ? 'selected' : '' }}>Finance</option>
+                <option value="IT" {{ old('department') == 'IT' ? 'selected' : '' }}>IT</option>
+                <option value="HR" {{ old('department') == 'HR' ? 'selected' : '' }}>HR</option>
+                <option value="Operations" {{ old('department') == 'Operations' ? 'selected' : '' }}>Operations</option>
+            </select>
             @error('department') <div class="error">{{ $message }}</div> @enderror
 
             <label><i class="fas fa-sitemap"></i> Section:</label>
@@ -45,9 +61,9 @@
             <label><i class="fas fa-shield-alt"></i> Rights Requested:</label>
             
             <div class="checkbox-group">
-                <label><input type="checkbox" name="rights[]" value="initiate" {{ in_array('initiate', old('rights', [])) ? 'checked' : '' }}> Initiate Payments</label>
-                <label><input type="checkbox" name="rights[]" value="review" {{ in_array('review', old('rights', [])) ? 'checked' : '' }}> Review/Verify Payments</label>
-                <label><input type="checkbox" name="rights[]" value="approve" {{ in_array('approve', old('rights', [])) ? 'checked' : '' }}> Approve Payments</label>
+                <label><input type="checkbox" name="rights[]" value="initiate" > Initiate Payments</label>
+                <label><input type="checkbox" name="rights[]" value="review" > Review/Verify Payments</label>
+                <label><input type="checkbox" name="rights[]" value="approve"> Approve Payments</label>
             </div>
             @error('rights') <div class="error">{{ $message }}</div> @enderror
         </div>
@@ -84,7 +100,11 @@
         <div class="form-section">
             <h3><i class="fas fa-user-tie"></i> Head Of Department Approval(if user is not in the finance department)</h3>
             <label>Name:</label>
-            <input type="text" name="hod_name" value="{{ old('hod_name') }}">
+            <select name="hod_name" required>
+                <option value="">-- Select HOD --</option>
+                <option value="John Doe" {{ old('hod_name') == 'John Doe' ? 'selected' : '' }}>John Doe</option>
+                <option value="Jane Smith" {{ old('hod_name') == 'Jane Smith' ? 'selected' : '' }}>Jane Smith</option>
+            </select>
             @error('hod_name') <div class="error">{{ $message }}</div> @enderror
 
             <label>Job Title:</label>
@@ -103,7 +123,11 @@
         <div class="form-section">
             <h3><i class="fas fa-money-check-alt"></i> Head Of Finance Approval</h3>
             <label>Name:</label>
-            <input type="text" name="finance_head_name" value="{{ old('finance_head_name') }}">
+            <select name="finance_head_name" required>
+                <option value="">-- Select Head of Finance --</option>
+                <option value="Mary Finance" {{ old('finance_head_name') == 'Mary Finance' ? 'selected' : '' }}>Mary Finance</option>
+                <option value="Peter Accountant" {{ old('finance_head_name') == 'Peter Accountant' ? 'selected' : '' }}>Peter Accountant</option>
+            </select>
             @error('finance_head_name') <div class="error">{{ $message }}</div> @enderror
 
             <label>Job Title:</label>
@@ -124,5 +148,17 @@
         </button>
     </form>
 </div>
+<script>
+    // Wait 4 seconds, then fade out the message
+    setTimeout(() => {
+        const flash = document.getElementById('success-message');
+        if (flash) {
+            flash.style.transition = 'opacity 0.5s ease';
+            flash.style.opacity = '0';
+            setTimeout(() => flash.remove(), 500); // Remove from DOM after fade
+        }
+    }, 4000); // 4 seconds
+</script>
+
 </body>
 </html>

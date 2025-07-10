@@ -14,7 +14,18 @@
     </div>
 @endif
 
+<!-- Top-right logout icon -->
+<form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+</form>
+
+
+
     <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+        
         <button onclick="document.getElementById('addUserForm').style.display='block'"
                 style="padding: 8px 16px; background: #2196F3; color: #fff; border: none; border-radius: 4px;">
             New Rights Request
@@ -166,9 +177,13 @@
         <td>{{ $data->department }}</td>
         <td>{{ $data->section }}</td>
         <td>{{ $data->job_title }}</td>
-        <td>{{ in_array('initiate', $data->rights ?? []) ? 'Yes' : 'No' }}</td>
+        
+<td>{{ $data->initiate_payments ? 'Yes' : 'No' }}</td>
+<td>{{ $data->review_payments ? 'Yes' : 'No' }}</td>
+<td>{{ $data->approve_payments ? 'Yes' : 'No' }}</td>
+        <!-- <td>{{ in_array('initiate', $data->rights ?? []) ? 'Yes' : 'No' }}</td>
         <td>{{ in_array('review', $data->rights ?? []) ? 'Yes' : 'No' }}</td>
-        <td>{{ in_array('approve', $data->rights ?? []) ? 'Yes' : 'No' }}</td>
+        <td>{{ in_array('approve', $data->rights ?? []) ? 'Yes' : 'No' }}</td> -->
         <td>{{ ucfirst($data->urgency) }}</td>
         <td>{{ $data->section_manager_name ?? 'N/A' }}</td>
         <td>{{ $data->section_manager_job_title ?? 'N/A' }}</td>

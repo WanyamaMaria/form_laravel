@@ -12,13 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('rights_requests', function (Blueprint $table) {
-
-            $table->foreignId('user_id')
-            ->nullable()
-                ->constrained('users')
-                ->onDelete('cascade');
-                // Assuming 'id' is the last column in the 'requests' table
-            
+            $table->dropColumn('rights');
         });
     }
 
@@ -28,8 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('rights_requests', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+            $table->dropColumn('rights');
         });
     }
 };

@@ -47,8 +47,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function rightsRequests(): HasMany
+    public function rightsRequests()
     {
-        return $this->hasMany(RightsRequest::class);
+        return $this->hasMany(\App\Models\RightsRequest::class);
     }
 }

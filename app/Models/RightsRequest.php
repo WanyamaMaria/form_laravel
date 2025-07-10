@@ -11,7 +11,7 @@ class RightsRequest extends Model
 {
 use HasFactory, SoftDeletes;
    protected $casts = [
-    'rights' => 'array',
+   // 'rights' => 'array',
     'section_manager_date' => 'date',
     'hod_date' => 'date',
     'finance_head_date' => 'date',
@@ -23,12 +23,15 @@ protected $fillable = [
     'department',
     'section',
     'job_title',
-    'rights',
+    //'rights',
     'urgency',
     'section_manager_name',
     'section_manager_job_title',
     'section_manager_signature',
     'section_manager_date',
+     'initiate_payments', 
+    'review_payments',   
+    'approve_payments', 
     'hod_name',
     'hod_job_title',
     'hod_signature',
