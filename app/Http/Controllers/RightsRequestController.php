@@ -40,9 +40,9 @@ public function store(rightsrequestFormRequest $request)
 {
     $data = $request->validated();
     $data['initiate_payments'] = in_array('initiate', $request->rights ?? []) ? true : false;
-$data['review_payments'] = in_array('review', $request->rights ?? []) ? true : false;
-$data['approve_payments'] = in_array('approve', $request->rights ?? []) ? true : false;
-unset($data['rights']); // Use validated data from FormRequest
+    $data['review_payments'] = in_array('review', $request->rights ?? []) ? true : false;
+    $data['approve_payments'] = in_array('approve', $request->rights ?? []) ? true : false;
+    unset($data['rights']); // Use validated data from FormRequest
     Auth::user()->rightsRequests()->create($data);
 
     return redirect()->route('rights-requests.showAll')->with('success', 'Request added successfully.');
@@ -84,14 +84,32 @@ public function edit($id)
      * Update the specified resource in storage.
      */
    
-    public function update(rightsrequestFormRequest $request, $id)
-{
-    $validatedData = $request->validate([
+//     public function update(rightsrequestFormRequest $request, $id)
+// {
+//     $validatedData = $request->validate([
        
-    ]);
+//     ]);
 
+//     $data = RightsRequest::findOrFail($id);
+    
+//     $data->update($validatedData);
+
+//     return redirect()->route('rights-requests.showAll')->with('success', 'Request updated successfully.');
+// }
+
+public function update(rightsrequestFormRequest $request, $id)
+{
     $data = RightsRequest::findOrFail($id);
-    $data->update($validatedData);
+
+    $validated = $request->validated();
+
+    // Update checkboxes safely
+    $validated['initiate_payments'] = in_array('initiate', $request->rights ?? []) ? true : false;
+    $validated['review_payments'] = in_array('review', $request->rights ?? []) ? true : false;
+    $validated['approve_payments'] = in_array('approve', $request->rights ?? []) ? true : false;
+    unset($validated['rights']);
+
+    $data->update($validated);
 
     return redirect()->route('rights-requests.showAll')->with('success', 'Request updated successfully.');
 }
@@ -124,9 +142,15 @@ public function edit($id)
         return view('rights-requests.trashed', compact('trashed'));
     }
 
+    // public function showAll()
+    // {
+    //     $requests = RightsRequest::all();
+    //     return view('rights-requests.show', compact('requests'));
+    // }
     public function showAll()
-    {
-        $requests = RightsRequest::all();
-        return view('rights-requests.show', compact('requests'));
-    }
+{
+    $requests = Auth::user()->rightsRequests()->get();
+    return view('rights-requests.show', compact('requests'));
+}
+
 }

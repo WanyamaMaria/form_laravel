@@ -110,3 +110,23 @@ button:hover {
     width: 100%;
     transition: opacity 0.7s;
 }
+
+.alert.alert-danger {
+            background-color: #ffe6e6;
+            color: #cc0000;
+            border: 1px solid #ffcccc;
+            padding: 10px 20px;
+            margin: 15px auto;
+            width: 80%;
+            border-radius: 8px;
+        }
+
+        .alert.alert-danger ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .alert.alert-danger li::before {
+            content: "⚠ ";
+            margin-right: 5px;
+        }
