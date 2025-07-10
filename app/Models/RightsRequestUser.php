@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\User;
 
-class RightsRequest extends Model
+class RightsRequestUser extends Model
 {
+
 use HasFactory, SoftDeletes;
    protected $casts = [
     'rights' => 'array',
@@ -39,8 +39,11 @@ protected $fillable = [
     'finance_head_date',
 ];
 
-public function user(){
-    return $this->belongsTo(User::class);
+
+
+    public function rightsRequest()
+{
+    return $this->belongsTo(RightsRequest::class);
 }
 
 }

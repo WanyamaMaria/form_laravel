@@ -1,0 +1,257 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #3498db;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    text-wrap: nowrap;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #eaf6ff;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.action-buttons a,
+.action-buttons button {
+    width: 80px;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.action-buttons a {
+    background-color: #2196F3;
+    color: white;
+}
+
+.action-buttons button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.action-buttons a:hover {
+    background-color: #1976d2;
+}
+
+.action-buttons button:hover {
+    background-color: #d32f2f;
+}
+
+.status-approved {
+    color: green;
+    font-weight: bold;
+}
+
+.status-rejected {
+    color: red;
+    font-weight: bold;
+}
+
+.status-pending {
+    color: orange;
+    font-weight: bold;
+}
+
+      * {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f1f5f9;
+    padding: 20px;
+    margin: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+h3 {
+    margin-top: 40px;
+    color: #34495e;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+label {
+    font-weight: 600;
+    margin-top: 20px;
+    display: block;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dcdfe3;
+    border-radius: 8px;
+    margin-top: 5px;
+    background: #f9fafb;
+}
+
+.checkbox-group label,
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+}
+
+.success {
+    background: #e0f7ea;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.error {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.submit-btn {
+    margin-top: 30px;
+    padding: 14px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    position: centre;
+    transition: 0.3s;
+}
+
+.submit {
+    margin-top: 30px;
+    padding: 14px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 20%;
+    transition: 0.3s;
+}
+
+.cancel-btn {
+    margin-top: 30px;
+    padding: 14px;
+    background-color:red;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 20%;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #2980b9;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    input, button {
+        font-size: 16px;
+    }
+}
+
+.success-message {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 6px;
+    padding: 12px 18px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+    opacity: 1;
+    display: inline-block;
+    max-width: 90%;
+    width: 100%;
+    transition: opacity 0.7s;
+}
+
+.error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 6px;
+    padding: 12px 18px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+    opacity: 1;
+    display: inline-block;
+    max-width: 90%;
+    width: fit-content;
+    transition: opacity 0.7s;
+}
