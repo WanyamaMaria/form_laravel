@@ -16,9 +16,10 @@ class RightsRequestController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
-    }
+{
+    $requests = RightsRequest::with('user')->get();
+    return view('admin.requests', compact('requests'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -151,6 +152,26 @@ public function update(rightsrequestFormRequest $request, $id)
 {
     $requests = Auth::user()->rightsRequests()->get();
     return view('rights-requests.show', compact('requests'));
+}
+
+public function approveAsDepartmentHead($id)
+{
+    $request = RightsRequest::findOrFail($id);
+    $request->hod_approved = true;
+    $request->hod_approver_id = auth()->id();
+    $request->save();
+
+    return redirect()->back()->with('success', 'Approved as HOD');
+}
+
+public function approveAsFinanceHead($id)
+{
+    $request = RightsRequest::findOrFail($id);
+    $request->finance_approved = true;
+    $request->finance_approver_id = auth()->id();
+    $request->save();
+
+    return redirect()->back()->with('success', 'Approved as Finance Head');
 }
 
 }

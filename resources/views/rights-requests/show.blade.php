@@ -7,6 +7,20 @@
    
 </head>
 <body>
+    @if(auth()->user()->isDepartmentHead() && $data->department !== 'Finance')
+    <form method="POST" action="{{ route('rights-requests.department.approve', $data->id) }}">
+        @csrf
+        <button type="submit">Approve as Department Head</button>
+    </form>
+@endif
+
+@if(auth()->user()->isFinanceHead())
+    <form method="POST" action="{{ route('rights-requests.finance.approve', $data->id) }}">
+        @csrf
+        <button type="submit">Approve as Finance Head</button>
+    </form>
+@endif
+
   
 @if(session('success'))
     <div id="success-message" class="success-message">

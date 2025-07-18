@@ -47,6 +47,17 @@
                 <i class="fas fa-lock"></i>
                 <input name="password_confirmation" type="password" placeholder="Confirm Password" required>
             </div>
+            <div class="input-group">
+    <i class="fas fa-user-tag"></i>
+    <select name="role" required>
+        <option value="">-- Select Role --</option>
+        <option value="requester">Requester</option>
+        <option value="department_head">Department Head</option>
+        <option value="finance_head">Finance Head</option>
+        <option value="admin">Admin</option>
+    </select>
+</div>
+
             <button type="submit">Register</button>
         </form>
         <div class="link">

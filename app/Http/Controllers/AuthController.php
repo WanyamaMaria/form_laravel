@@ -20,13 +20,16 @@ class AuthController extends Controller
         } 
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:8|confirmed',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'password_confirmation' => 'required_with:password|same:password',
+            'role' => 'required|in:admin,department_head,finance_head',
         ]);
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' =>Hash::make($request->password),
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
         ]);
        return redirect()->route('login')->with('success', 'Registration successful. Please log in.');
     }
