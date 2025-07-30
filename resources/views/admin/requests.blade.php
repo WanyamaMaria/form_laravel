@@ -11,7 +11,7 @@
         <div style="border: 1px solid #ddd; padding: 10px; margin: 10px 0;">
             <p><strong>Requester:</strong> {{ $request->user->name }}</p>
             <p><strong>Email:</strong> {{ $request->user->email }}</p>
-            <p><strong>Purpose:</strong> {{ $request->purpose }}</p>
+            
 
             <p><strong>Department Approval:</strong> 
                 {{ $request->hod_signature ? 'Approved by ' . $request->hod_name : 'Pending' }}

@@ -38,18 +38,23 @@ class User extends Authenticatable
     }
 
     // Role check methods
-  public function isDepartmentHead()
-{
-    return $this->role === 'department_head';
-}
-
-public function isFinanceHead()
-{
-    return $this->role === 'finance_head';
-}
-
-public function isAdmin()
-{
-    return $this->role === 'admin';
-}
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+    
+    public function isRequester()
+    {
+        return $this->role === 'requester';
+    }
+    
+    public function isDepartmentHead()
+    {
+        return $this->role === 'department_head';
+    }
+    
+    public function isFinanceHead()
+    {
+        return $this->role === 'finance_head';
+    }
 }

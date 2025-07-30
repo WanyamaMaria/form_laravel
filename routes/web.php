@@ -12,24 +12,20 @@ Route::middleware(  ['auth'])->group(function () {
  });
 Route::resource('rights-requests', RightsRequestController::class);
 Route::get('rights-requests', [App\Http\Controllers\RightsRequestController::class, 'showAll'])->name('rights-requests.showAll');
-//Route::match(['get','post'],'/register', [AuthController::class, 'register'])->name('register');
-//Route::match(['get','post'],'/login', [AuthController::class, 'login'])->name('login');
-//Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-
 
 });
 
  Route::match(['get','post'],'/register', [AuthController::class, 'register'])->name('register');
  Route::match(['get','post'],'/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-// Route::get('/rights-request', [RightsRequestController::class, 'create'])->name('rights-requests.create');
-// Route::post('/rights-request', [RightsRequestController::class, 'store'])->name('rights-requests.store');
-// Route::get('/rights-request/{id}', [RightsRequestController::class, 'show'])->name('rights-requests.show');
 
+// Route::get('/approvals/department', [ApprovalController::class, 'department'])->name('approvals.department');
+// Route::post('/approvals/{id}/approve', [ApprovalController::class, 'approve'])->name('approvals.department.approve');
 
 Route::middleware(['auth', 'role:department_head'])->group(function () {
     Route::get('/approvals/department', [ApprovalController::class, 'department'])->name('approvals.department');
     Route::post('/approvals/{id}/approve', [ApprovalController::class, 'approve'])->name('approvals.department.approve');
+    Route::post('/approvals/{id}/deny', [ApprovalController::class, 'deny'])->name('approvals.department.deny');
 });
 
 Route::middleware(['auth', 'role:finance_head'])->group(function () {
@@ -40,3 +36,9 @@ Route::middleware(['auth', 'role:finance_head'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/all-requests', [RightsRequestController::class, 'index'])->name('admin.requests');
 });
+
+Route::middleware(['auth', 'role:requester'])->group(function () {
+    Route::get('rights-requests', [RightsRequestController::class, 'showAll'])->name('rights-requests.showAll');
+    Route::get('rights-requests/create', [RightsRequestController::class, 'create'])->name('rights-requests.create');
+});
+

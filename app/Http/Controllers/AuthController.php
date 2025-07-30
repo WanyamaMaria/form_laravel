@@ -23,7 +23,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required_with:password|same:password',
-            'role' => 'required|in:admin,department_head,finance_head',
+            'role' => 'required|in:admin,requester,department_head,finance_head',
         ]);
         User::create([
             'name' => $request->name,
@@ -37,22 +37,35 @@ class AuthController extends Controller
     /**
      * Handle a login request to the application.
      */
-    public function login(Request $request)
-    {
-        if ($request->isMethod('get')) {
-            return view('auth.login');
-        }
-        $credentials = $request->validate([
-            'email' => 'required',
-            'password' => 'required',
-        ]);
-            if (Auth::attempt($credentials)) {
-            return redirect()->route('rights-requests.create')->with('success', 'Login successful.');
-        }
-        return back()->withErrors([
-             'The provided credentials do not match our records.',
-        ]);
+   public function login(Request $request)
+{
+    if ($request->isMethod('get')) {
+        return view('auth.login');
     }
+
+    $credentials = $request->validate([
+        'email' => 'required',
+        'password' => 'required',
+    ]);
+
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.requests');
+        } elseif ($user->isDepartmentHead()) {
+            return redirect()->route('approvals.department');
+        } elseif ($user->isFinanceHead()) {
+            return redirect()->route('approvals.finance');
+        } elseif ($user->isRequester()) {
+            return redirect()->route('rights-requests.create');
+        }
+
+        return redirect('/'); // fallback
+    }
+
+    return back()->withErrors(['The provided credentials do not match our records.']);
+}
+
 
     /**
      * Handle a logout request to the application.
