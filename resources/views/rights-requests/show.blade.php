@@ -158,7 +158,7 @@
         </form>
     </div>
 
-    <h2>SUBMITTED RIGHTS REQUESTS</h2>
+     <h2>SUBMITTED RIGHTS REQUESTS</h2>
 
 @php
     if (!isset($requests) && isset($data)) {
@@ -188,70 +188,43 @@
         <th>Status</th>
     </tr>
     @foreach($requests as $data)
-<tr>
-    <td>{{ $data->staff_name }}</td>
-    <td>{{ $data->department }}</td>
-    <td>{{ $data->section }}</td>
-    <td>{{ $data->job_title }}</td>
-
-    <td>{{ $data->initiate_payments ? 'Yes' : 'No' }}</td>
-    <td>{{ $data->review_payments ? 'Yes' : 'No' }}</td>
-    <td>{{ $data->approve_payments ? 'Yes' : 'No' }}</td>
-
-    <td>{{ ucfirst($data->urgency) }}</td>
-
-    <td>{{ $data->section_manager_name ?? 'N/A' }}</td>
-    <td>{{ $data->section_manager_job_title ?? 'N/A' }}</td>
-
-    <td>
-        {{ $data->hod_name ?? 'N/A' }}<br>
-        <small>{{ $data->hod_job_title ?? '' }}</small><br>
-        @if($data->hod_signature)
-            <strong>Signature:</strong> {{ $data->hod_signature }}<br>
-            <strong>Date:</strong> {{ \Carbon\Carbon::parse($data->hod_date)->format('Y-m-d') }}
-        @else
-            <em>Awaiting Approval</em>
-        @endif
-    </td>
-
-    <td>
-        {{ $data->finance_head_name ?? 'N/A' }}<br>
-        <small>{{ $data->finance_head_job_title ?? '' }}</small><br>
-        @if($data->finance_head_signature)
-            <strong>Signature:</strong> {{ $data->finance_head_signature }}<br>
-            <strong>Date:</strong> {{ \Carbon\Carbon::parse($data->finance_head_date)->format('Y-m-d') }}
-        @else
-            <em>Awaiting Approval</em>
-        @endif
-    </td>
-
-    <td>
-        <div class="action-buttons">
-            <a href="{{ route('rights-requests.edit', $data->id) }}">Edit</a>
-            <form action="{{ route('rights-requests.destroy', $data->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" onclick="return confirm('Are you sure you want to delete this request?')">Delete</button>
-            </form>
-        </div>
-    </td>
-
-    <td>
-        @if($data->status === 'Approved by HOD')
-            <span style="color: green;">{{ $data->status }}</span>
-        @elseif($data->status === 'Rejected by HOD')
-            <span style="color: red;">{{ $data->status }}</span>
-        @elseif($data->status === 'Approved by Finance Head')
-            <span style="color: green;">{{ $data->status }}</span>
-        @elseif($data->status === 'Rejected by Finance Head')
-            <span style="color: red;">{{ $data->status }}</span>
-        @else
-            <span style="color: orange;">Pending</span>
-        @endif
-    </td>
-</tr>
-@endforeach
-
+    <tr>
+        <td>{{ $data->staff_name }}</td>
+        <td>{{ $data->department }}</td>
+        <td>{{ $data->section }}</td>
+        <td>{{ $data->job_title }}</td>
+         <td>{{ $data->initiate_payments ? 'Yes' : 'No' }}</td>
+        <td>{{ $data->review_payments ? 'Yes' : 'No' }}</td>
+        <td>{{ $data->approve_payments ? 'Yes' : 'No' }}</td>
+        <!-- <td>{{ in_array('initiate', $data->rights ?? []) ? 'Yes' : 'No' }}</td>
+        <td>{{ in_array('review', $data->rights ?? []) ? 'Yes' : 'No' }}</td>
+        <td>{{ in_array('approve', $data->rights ?? []) ? 'Yes' : 'No' }}</td> -->
+        <td>{{ ucfirst($data->urgency) }}</td>
+        <td>{{ $data->section_manager_name ?? 'N/A' }}</td>
+        <td>{{ $data->section_manager_job_title ?? 'N/A' }}</td>
+        <td>{{ $data->hod_name ?? 'N/A' }}</td>
+        <td>{{ $data->hod_job_title ?? 'N/A' }}</td>
+        <td>{{ $data->finance_head_name ?? 'N/A' }}</td>
+        <td>{{ $data->finance_head_job_title ?? 'N/A' }}</td>
+        <td>
+            <div class="action-buttons">
+                <a href="{{ route('rights-requests.edit', $data->id) }}">Edit</a>
+                <form action="{{ route('rights-requests.destroy', $data->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete this request?')">Delete</button>
+                </form>
+            </div>
+        </td>
+        <td>
+            @if($data->status)
+                <span>{{ $data->status }}</span>
+            @else
+                <span class="status-pending">Pending</span>
+            @endif
+        </td>
+    </tr>
+    @endforeach
 </table>
 
     <script>

@@ -22,15 +22,27 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Route::get('/approvals/department', [ApprovalController::class, 'department'])->name('approvals.department');
 // Route::post('/approvals/{id}/approve', [ApprovalController::class, 'approve'])->name('approvals.department.approve');
 
-Route::middleware(['auth', 'role:department_head'])->group(function () {
-    Route::get('/approvals/department', [ApprovalController::class, 'department'])->name('approvals.department');
-    Route::post('/approvals/{id}/approve', [ApprovalController::class, 'approve'])->name('approvals.department.approve');
-    Route::post('/approvals/{id}/deny', [ApprovalController::class, 'deny'])->name('approvals.department.deny');
+// Route::middleware(['auth', 'role:department_head'])->group(function () {
+//     Route::get('/approvals/department', [ApprovalController::class, 'department'])->name('approvals.department');
+//     Route::post('/approvals/{id}/approve', [ApprovalController::class, 'approve'])->name('approvals.department.approve');
+//     Route::post('/approvals/{id}/deny', [ApprovalController::class, 'deny'])->name('approvals.department.deny');
+// });
+
+// Route::middleware(['auth', 'role:finance_head'])->group(function () {
+//     Route::get('/approvals/finance', [ApprovalController::class, 'finance'])->name('approvals.finance');
+//     Route::post('/approvals/{id}/approve', [ApprovalController::class, 'approve'])->name('approvals.finance.approve');
+// });
+// Department Head
+Route::prefix('approvals/department')->middleware(['auth', 'role:department_head'])->group(function () {
+    Route::get('/', [ApprovalController::class, 'department'])->name('approvals.department');
+    Route::post('/{id}/approve', [ApprovalController::class, 'approve'])->name('approvals.department.approve');
+    Route::post('/{id}/deny', [ApprovalController::class, 'deny'])->name('approvals.department.deny');
 });
 
-Route::middleware(['auth', 'role:finance_head'])->group(function () {
-    Route::get('/approvals/finance', [ApprovalController::class, 'finance'])->name('approvals.finance');
-    Route::post('/approvals/{id}/approve', [ApprovalController::class, 'approve'])->name('approvals.finance.approve');
+// Finance Head
+Route::prefix('approvals/finance')->middleware(['auth', 'role:finance_head'])->group(function () {
+    Route::get('/', [ApprovalController::class, 'finance'])->name('approvals.finance');
+    Route::post('/{id}/approve', [ApprovalController::class, 'approve'])->name('approvals.finance.approve');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
