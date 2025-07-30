@@ -8,20 +8,40 @@ use Illuminate\Support\Facades\Auth;
 
 class ApprovalController extends Controller
 {
-    public function department()
-    {
-        // Show all requests pending HOD approval
-        $requests = RightsRequest::whereNull('hod_signature')->get();
-        return view('approvals.department', compact('requests'));
+   public function department(Request $request)
+{
+    $query = RightsRequest::query();
+
+    if ($request->status === 'pending') {
+        $query->whereNull('hod_signature');
+    } elseif ($request->status === 'approved') {
+        $query->whereNotNull('hod_signature');
     }
 
-    public function finance()
+    $requests = $query->orderByDesc('created_at')->get();
+
+    return view('approvals.department', [
+        'requests' => $requests,
+        'status' => $request->status
+    ]);
+}
+
+    public function finance(Request $request)
     {
-        // Show all requests approved by HOD but pending Finance
-        $requests = RightsRequest::whereNotNull('hod_signature')
-            ->whereNull('finance_head_signature')
-            ->get();
-        return view('approvals.finance', compact('requests'));
+        $query = RightsRequest::whereNotNull('hod_signature'); // Only those approved by HOD
+
+        if ($request->status === 'pending') {
+            $query->whereNull('finance_head_signature');
+        } elseif ($request->status === 'approved') {
+            $query->whereNotNull('finance_head_signature');
+        }
+
+        $requests = $query->orderByDesc('created_at')->get();
+
+        return view('approvals.finance', [
+            'requests' => $requests,
+            'status' => $request->status
+        ]);
     }
 
     public function approve(Request $request, $id)
@@ -62,8 +82,13 @@ class ApprovalController extends Controller
         $data = RightsRequest::findOrFail($id);
 
         // HOD rejection
-        if (Auth::user()->isDepartmentHead()) {
-            $data->hod_signature = 'denied';
+        
+            if (Auth::user()->isDepartmentHead()) {
+            $request->validate([
+                'hod_signature' => 'required|string|max:255',
+            ]);
+
+            $data->hod_signature = $request->input('hod_signature');
             $data->hod_name = Auth::user()->name;
             $data->hod_date = now();
             $data->status = 'Rejected by HOD';
@@ -71,7 +96,10 @@ class ApprovalController extends Controller
 
         // Finance Head rejection
         elseif (Auth::user()->isFinanceHead()) {
-            $data->finance_head_signature = 'denied';
+             $request->validate([
+                'finance_head_signature' => 'required|string|max:255',
+            ]);
+            $data->hod_signature = $request->input('finance_head_signature');
             $data->finance_head_name = Auth::user()->name;
             $data->finance_head_date = now();
             $data->status = 'Rejected by Finance Head';

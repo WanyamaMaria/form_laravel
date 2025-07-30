@@ -57,7 +57,12 @@ class AuthController extends Controller
         } elseif ($user->isFinanceHead()) {
             return redirect()->route('approvals.finance');
         } elseif ($user->isRequester()) {
-            return redirect()->route('rights-requests.create');
+            // Check if user has submitted a rights request
+            if ($user->rightsRequests()->exists()) {
+                return redirect()->route('rights-requests.showAll');
+            } else {
+                return redirect()->route('rights-requests.create');
+            }
         }
 
         return redirect('/'); // fallback

@@ -42,6 +42,7 @@ Route::prefix('approvals/department')->middleware(['auth', 'role:department_head
 // Finance Head
 Route::prefix('approvals/finance')->middleware(['auth', 'role:finance_head'])->group(function () {
     Route::get('/', [ApprovalController::class, 'finance'])->name('approvals.finance');
+    Route::post('/{id}/deny', [ApprovalController::class, 'deny'])->name('approvals.finance.deny');
     Route::post('/{id}/approve', [ApprovalController::class, 'approve'])->name('approvals.finance.approve');
 });
 

@@ -41,11 +41,17 @@
             </div>
             <div class="input-group">
                 <i class="fas fa-lock"></i>
-                <input name="password" type="password" placeholder="Password" required>
+                <input name="password" type="password" id="password" placeholder="Password" required>
+                 <span onclick="togglePassword()" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
+                    <i id="eye-icon" class="fa fa-eye"></i>
+                </span>
             </div>
             <div class="input-group">
                 <i class="fas fa-lock"></i>
                 <input name="password_confirmation" type="password" placeholder="Confirm Password" required>
+                 <span onclick="togglePassword()" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
+                    <i id="eye-icon" class="fa fa-eye"></i>
+                </span>
             </div>
             <div class="input-group">
     <i class="fas fa-user-tag"></i>
@@ -64,6 +70,21 @@
             Already have an account? <a href="{{ route('login') }}">Login</a>
         </div>
     </div>
+
+     <script>
+    function togglePassword() {
+        var input = document.getElementById('password');
+        var icon = document.getElementById('eye-icon');
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = "password";
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
 
     <script>
     // Wait 4 seconds, then fade out the message

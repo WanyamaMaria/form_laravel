@@ -24,9 +24,12 @@
                 <i class="fas fa-envelope"></i>
                 <input name="email" type="email" placeholder="Email" required>
             </div>
-            <div class="input-group">
+            <div class="input-group" style="position:relative;">
                 <i class="fas fa-lock"></i>
-                <input name="password" type="password" placeholder="Password" required>
+                <input name="password" type="password" id="password" placeholder="Password" required style="padding-right: 35px;">
+                <span onclick="togglePassword()" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer;">
+                    <i id="eye-icon" class="fa fa-eye"></i>
+                </span>
             </div>
             <button type="submit">Login</button>
         </form>
@@ -36,6 +39,19 @@
     </div>
 
     <script>
+    function togglePassword() {
+        var input = document.getElementById('password');
+        var icon = document.getElementById('eye-icon');
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = "password";
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
     // Wait 4 seconds, then fade out the message
     setTimeout(() => {
         const flash = document.getElementById('success-message');

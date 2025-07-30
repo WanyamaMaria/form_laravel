@@ -175,7 +175,6 @@
         <th>Initiate Payments</th>
         <th>Review Payments</th>
         <th>Approve Payments</th>
-        
         <th>Urgency</th>
         <th>Section Manager Name</th>
         <th>Section Manager Job Title</th>
@@ -184,8 +183,7 @@
         <th>Finance Head Name</th>
         <th>Finance Head Job Title</th>
         <th>Action</th>
-
-        <th>Status</th>
+         <th>Status</th>
     </tr>
     @foreach($requests as $data)
     <tr>
@@ -216,13 +214,19 @@
                 </form>
             </div>
         </td>
-        <td>
-            @if($data->status)
-                <span>{{ $data->status }}</span>
-            @else
-                <span class="status-pending">Pending</span>
-            @endif
-        </td>
+       <td>
+    <ul style="list-style:none; padding-left:0; margin:0;">
+        @if($data->hod_signature)
+            <li><span class="status-approved">Approved by HOD</span></li>
+        @endif
+        @if($data->finance_head_signature)
+            <li><span class="status-approved">Approved by Finance</span></li>
+        @endif
+        @if(!$data->hod_signature && !$data->finance_head_signature)
+            <li><span class="status-pending">Pending</span></li>
+        @endif
+    </ul>
+</td>
     </tr>
     @endforeach
 </table>
